@@ -3,18 +3,19 @@ package main
 import (
 	"log"
 
+	"management/internal/infra"
 	"management/internal/infra/conf"
-	"management/internal/infra/postgres"
 )
 
 func main() {
 	config, err := conf.Load(".")
 	if err != nil {
-		log.Fatal("Cannot load config:", err)
+		log.Fatalf("Cannot load config: %s", err)
 	}
 
-	db, err := postgres.InitDB(config)
+	app, err := infra.Init(config)
+
 	if err != nil {
-		log.Fatal("Cannot connect to the database:", err)
+		log.Fatalf("Cannot init the application: %s", err)
 	}
 }
