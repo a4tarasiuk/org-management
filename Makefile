@@ -1,12 +1,15 @@
+.PHONY: create-migrations apply-migrations
+
 include .env
 export
 
-migrate-up:
-		migrate -path=internal/infra/postgres/migrations \
-				-database "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable" \
-				-verbose up
+create-migrations:
+		export PG_CONN_STR="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable"
 
-migrate-down:
-		migrate -path=internal/infra/postgres/migrations \
-				-database "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable" \
-				-verbose down
+		@read -p "Enter migration name: " migration_name; \
+		atlas migrate diff $$migration_name --env gorm
+
+apply-migrations:
+		export PG_CONN_STR="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable"
+
+		atlas migrate apply --env gorm
