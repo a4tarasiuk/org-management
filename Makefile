@@ -1,4 +1,4 @@
-.PHONY: create-migrations apply-migrations
+.PHONY: create-migrations apply-migrations test coverage
 
 include .env
 export
@@ -13,3 +13,9 @@ apply-migrations:
 		export PG_CONN_STR="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable"
 
 		atlas migrate apply --env gorm
+
+test:
+		go test ./... -v
+
+coverage:
+		go test -cover ./... -v
