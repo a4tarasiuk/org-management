@@ -1,5 +1,5 @@
 package infra
 
 type Module interface {
-	Init(infra *Application) error
+	Init(infra *Infra) error
 }

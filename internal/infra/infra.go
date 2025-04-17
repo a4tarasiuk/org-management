@@ -7,13 +7,13 @@ import (
 	"management/internal/infra/postgres"
 )
 
-type Application struct {
+type Infra struct {
 	DB *gorm.DB
 
 	Router *gin.Engine
 }
 
-func Init(config conf.Config) (*Application, error) {
+func Init(config conf.Config) (*Infra, error) {
 	db, err := postgres.InitDB(config)
 	if err != nil {
 		return nil, err
@@ -21,7 +21,7 @@ func Init(config conf.Config) (*Application, error) {
 
 	router := gin.Default()
 
-	app := &Application{
+	app := &Infra{
 		DB:     db,
 		Router: router,
 	}
@@ -29,7 +29,7 @@ func Init(config conf.Config) (*Application, error) {
 	return app, nil
 }
 
-func (app *Application) Run() error {
+func (app *Infra) Run() error {
 	err := app.Router.Run()
 	return err
 }
