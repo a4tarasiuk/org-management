@@ -35,11 +35,7 @@ func (h CreateDistributorHandler) Handle(ctx *gin.Context) {
 		return
 	}
 
-	responseSchema := createOrganizationResponse{
-		ID:   organization.ID,
-		Name: organization.Name,
-		Type: organization.Type,
-	}
+	responseSchema := organizationResponseFromOrganization(organization)
 
 	ctx.JSON(http.StatusCreated, responseSchema)
 }

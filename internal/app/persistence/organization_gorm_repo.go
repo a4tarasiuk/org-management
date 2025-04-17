@@ -4,9 +4,10 @@ import (
 	"gorm.io/gorm"
 	"management/internal/app/dto"
 	"management/internal/app/orm"
+	"management/internal/app/repositories"
 )
 
-func NewOrganizationRepository(db *gorm.DB) organizationGORMRepository {
+func NewOrganizationRepository(db *gorm.DB) repositories.OrganizationRepository {
 	return organizationGORMRepository{db: db}
 }
 

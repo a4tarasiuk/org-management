@@ -20,8 +20,11 @@ func main() {
 		log.Fatalf("Cannot init the application: %s", err)
 	}
 
-	app := app.Application{}
-	app.Init(_infra)
+	application := app.Application{}
+
+	if err = application.Init(_infra); err != nil {
+		log.Fatalf("Unable to initialize application: %s", err)
+	}
 
 	if err = _infra.Run(); err != nil {
 		log.Fatalf("Unable to run the application: %s", err)
