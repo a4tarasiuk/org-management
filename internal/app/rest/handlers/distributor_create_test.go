@@ -53,7 +53,7 @@ func TestCreateDistributorOrganizationHandler(t *testing.T) {
 			expectedResponseSchema := createOrganizationResponse{
 				ID:   1,
 				Name: createOrgSchema.Name,
-				Type: core.DistributorOrganization,
+				Type: core.DistributorOrganization.String(),
 			}
 
 			expectedBody, err := json.Marshal(expectedResponseSchema)

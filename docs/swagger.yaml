@@ -1,0 +1,84 @@
+definitions:
+  handlers.createOrganizationRequest:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  handlers.createOrganizationResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  handlers.errorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  handlers.organizationListItemSchema:
+    properties:
+      external_id:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  handlers.organizationListResponse:
+    properties:
+      organizations:
+        items:
+          $ref: '#/definitions/handlers.organizationListItemSchema'
+        type: array
+    type: object
+info:
+  contact: {}
+paths:
+  /organizations/distributors:
+    get:
+      description: Responds with the list of all Distributor organizations as JSON.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.organizationListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: Get List of Distributors
+      tags:
+      - distributors
+    post:
+      description: Creates a new Distributor organization.
+      parameters:
+      - description: Organization JSON
+        in: body
+        name: organization
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.createOrganizationRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handlers.createOrganizationResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: Create Distributor organization
+      tags:
+      - distributors
+swagger: "2.0"

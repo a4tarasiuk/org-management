@@ -1,0 +1,132 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/organizations/distributors": {
+            "get": {
+                "description": "Responds with the list of all Distributor organizations as JSON.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "distributors"
+                ],
+                "summary": "Get List of Distributors",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.organizationListResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.errorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a new Distributor organization.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "distributors"
+                ],
+                "summary": "Create Distributor organization",
+                "parameters": [
+                    {
+                        "description": "Organization JSON",
+                        "name": "organization",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.createOrganizationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.createOrganizationResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.errorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handlers.createOrganizationRequest": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.createOrganizationResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.errorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.organizationListItemSchema": {
+            "type": "object",
+            "properties": {
+                "external_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.organizationListResponse": {
+            "type": "object",
+            "properties": {
+                "organizations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handlers.organizationListItemSchema"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -16,6 +16,14 @@ func NewListOrganizationHandler(repository repositories.OrganizationRepository) 
 	return ListDistributorsHandler{repository: repository}
 }
 
+// Handle Get Distributors 	godoc
+// @Summary		Get List of Distributors
+// @Description	Responds with the list of all Distributor organizations as JSON.
+// @Tags		distributors
+// @Produce		json
+// @Success 	200 {object}  organizationListResponse
+// @Failure 	500 {object} errorResponse "Internal Server Error"
+// @Router		/organizations/distributors [get]
 func (h ListDistributorsHandler) Handle(ctx *gin.Context) {
 	distributors, err := h.repository.GetMany(
 		repositories.OrganizationGetManyParams{

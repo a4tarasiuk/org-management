@@ -17,6 +17,15 @@ func NewCreateDistributorHandler(service services.Service) CreateDistributorHand
 	return CreateDistributorHandler{service: service}
 }
 
+// Handle Create Distributor 	godoc
+// @Summary		Create Distributor organization
+// @Description	Creates a new Distributor organization.
+// @Tags		distributors
+// @Produce		json
+// @Param       organization  body      createOrganizationRequest  true  "Organization JSON"
+// @Success 	201 {object} createOrganizationResponse
+// @Failure 	500 {object} errorResponse "Internal Server Error"
+// @Router		/organizations/distributors [post]
 func (h CreateDistributorHandler) Handle(ctx *gin.Context) {
 	requestSchema := createOrganizationRequest{}
 

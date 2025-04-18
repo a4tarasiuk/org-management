@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: create-migrations apply-migrations test coverage lint
+.PHONY: create-migrations apply-migrations test coverage lint docs
 
 include .env
 export
@@ -25,3 +25,6 @@ coverage:
 ## lint: runs linter for all packages
 lint:
 		golangci-lint run
+
+docs:
+		swag init -g ./cmd/main.go -o ./docs

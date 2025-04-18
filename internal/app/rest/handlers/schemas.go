@@ -1,9 +1,5 @@
 package handlers
 
-import (
-	"management/internal/app/core"
-)
-
 type createOrganizationRequest struct {
 	Name string `json:"name" binding:"required"`
 }
@@ -13,7 +9,7 @@ type createOrganizationResponse struct {
 
 	Name string `json:"name"`
 
-	Type core.OrganizationType `json:"type"`
+	Type string `json:"type"`
 }
 
 type organizationListItemSchema struct {

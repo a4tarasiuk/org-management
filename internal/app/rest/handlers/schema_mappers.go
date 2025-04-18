@@ -6,7 +6,7 @@ func organizationResponseFromOrganization(org models.Organization) createOrganiz
 	return createOrganizationResponse{
 		ID:   org.ID,
 		Name: org.Name,
-		Type: org.Type,
+		Type: org.Type.String(),
 	}
 }
 

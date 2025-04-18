@@ -5,6 +5,7 @@ import (
 	"gorm.io/gorm"
 	"management/internal/infra/conf"
 	"management/internal/infra/postgres"
+	"management/internal/infra/swagger"
 )
 
 type Infra struct {
@@ -20,6 +21,8 @@ func Init(config conf.Config) (*Infra, error) {
 	}
 
 	router := gin.Default()
+
+	swagger.Init(router)
 
 	app := &Infra{
 		DB:     db,
