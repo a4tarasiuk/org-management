@@ -21,5 +21,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	io.WriteString(os.Stdout, stmts)
+	_, err = io.WriteString(os.Stdout, stmts)
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "failed to write gorm statements: %v\n", err)
+	}
 }

@@ -16,7 +16,7 @@ import (
 )
 
 type organizationInMemoryService struct {
-	m mock.Mock
+	m *mock.Mock
 }
 
 func (s organizationInMemoryService) Create(organization *models.Organization) error {
@@ -43,7 +43,7 @@ func TestCreateDistributorOrganizationHandler(t *testing.T) {
 			serviceMock := mock.Mock{}
 			serviceMock.On("Create", &orgToBeCreated).Return(nil)
 
-			handler := CreateDistributorHandler{service: organizationInMemoryService{m: serviceMock}}
+			handler := CreateDistributorHandler{service: organizationInMemoryService{m: &serviceMock}}
 			handler.Handle(ctx)
 
 			serviceMock.AssertExpectations(t)
@@ -78,7 +78,7 @@ func TestCreateDistributorOrganizationHandler(t *testing.T) {
 			serviceMock := mock.Mock{}
 			serviceMock.On("Create", mock.Anything).Return(err)
 
-			handler := CreateDistributorHandler{service: organizationInMemoryService{m: serviceMock}}
+			handler := CreateDistributorHandler{service: organizationInMemoryService{m: &serviceMock}}
 			handler.Handle(ctx)
 
 			assert.Equal(t, w.Code, http.StatusInternalServerError)
@@ -102,7 +102,7 @@ func TestCreateDistributorOrganizationHandler(t *testing.T) {
 
 			testutil.MockJsonPost(ctx, createOrgSchema)
 
-			handler := CreateDistributorHandler{service: organizationInMemoryService{m: mock.Mock{}}}
+			handler := CreateDistributorHandler{service: organizationInMemoryService{m: &mock.Mock{}}}
 			handler.Handle(ctx)
 
 			assert.Equal(t, w.Code, http.StatusBadRequest)

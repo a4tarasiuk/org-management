@@ -1,4 +1,6 @@
-.PHONY: create-migrations apply-migrations test coverage
+SHELL := /bin/bash
+
+.PHONY: create-migrations apply-migrations test coverage lint
 
 include .env
 export
@@ -19,3 +21,7 @@ test:
 
 coverage:
 		go test -cover ./... -failfast
+
+## lint: runs linter for all packages
+lint:
+		golangci-lint run
