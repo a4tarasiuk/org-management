@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"management/internal/app/core"
-	"management/internal/app/orm"
 )
 
 type createOrganizationRequest struct {
@@ -17,14 +16,17 @@ type createOrganizationResponse struct {
 	Type core.OrganizationType `json:"type"`
 }
 
-func organizationResponseFromOrganization(org orm.Organization) createOrganizationResponse {
-	return createOrganizationResponse{
-		ID:   org.ID,
-		Name: org.Name,
-		Type: org.Type,
-	}
+type organizationListItemSchema struct {
+	ID         uint   `json:"id"`
+	Name       string `json:"name"`
+	Type       string `json:"type"`
+	ExternalID *uint  `json:"external_id"`
 }
 
-type ErrorResponse struct {
+type organizationListResponse struct {
+	Organizations []organizationListItemSchema `json:"organizations"`
+}
+
+type errorResponse struct {
 	Error string `json:"error"`
 }

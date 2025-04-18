@@ -15,7 +15,7 @@ apply-migrations:
 		atlas migrate apply --env gorm
 
 test:
-		go test ./... -v
+		go test ./... -v -failfast
 
 coverage:
-		go test -cover ./... -v
+		go test -cover ./... -failfast

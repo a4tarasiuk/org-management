@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/mock"
 
 	"management/internal/app/core"
-	"management/internal/app/orm"
+	"management/internal/app/models"
 	"management/internal/testutil"
 )
 
@@ -19,7 +19,7 @@ type organizationInMemoryService struct {
 	m mock.Mock
 }
 
-func (s organizationInMemoryService) Create(organization *orm.Organization) error {
+func (s organizationInMemoryService) Create(organization *models.Organization) error {
 	args := s.m.Called(organization)
 
 	organization.ID++
@@ -27,7 +27,7 @@ func (s organizationInMemoryService) Create(organization *orm.Organization) erro
 	return args.Error(0)
 }
 
-func Test_CreateDistributorOrganizationHandler(t *testing.T) {
+func TestCreateDistributorOrganizationHandler(t *testing.T) {
 	t.Run(
 		"When created successfully 201", func(t *testing.T) {
 			w := httptest.NewRecorder()
@@ -38,7 +38,7 @@ func Test_CreateDistributorOrganizationHandler(t *testing.T) {
 
 			testutil.MockJsonPost(ctx, createOrgSchema)
 
-			orgToBeCreated := orm.Organization{Name: createOrgSchema.Name, Type: core.DistributorOrganization}
+			orgToBeCreated := models.Organization{Name: createOrgSchema.Name, Type: core.DistributorOrganization}
 
 			serviceMock := mock.Mock{}
 			serviceMock.On("Create", &orgToBeCreated).Return(nil)
@@ -83,7 +83,7 @@ func Test_CreateDistributorOrganizationHandler(t *testing.T) {
 
 			assert.Equal(t, w.Code, http.StatusInternalServerError)
 
-			expectedBody, err := json.Marshal(ErrorResponse{Error: err.Error()})
+			expectedBody, err := json.Marshal(errorResponse{Error: err.Error()})
 			assert.NoError(t, err)
 
 			assert.Equal(t, w.Body.Bytes(), expectedBody)
@@ -110,7 +110,7 @@ func Test_CreateDistributorOrganizationHandler(t *testing.T) {
 			assert.Contains(t, w.Body.String(), "Field validation")
 			assert.Contains(t, w.Body.String(), "'Name'")
 
-			responseBody := ErrorResponse{}
+			responseBody := errorResponse{}
 			err := json.Unmarshal(w.Body.Bytes(), &responseBody)
 			assert.NoError(t, err)
 		},

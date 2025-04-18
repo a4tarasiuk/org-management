@@ -1,10 +1,14 @@
 package repositories
 
 import (
-	"management/internal/app/dto"
-	"management/internal/app/orm"
+	"management/internal/app/core"
+	"management/internal/app/models"
 )
 
+type OrganizationGetManyParams struct {
+	Type core.OrganizationType
+}
+
 type OrganizationRepository interface {
-	GetMany(params dto.ListParams) ([]orm.Organization, error)
+	GetMany(params OrganizationGetManyParams) ([]models.Organization, error)
 }

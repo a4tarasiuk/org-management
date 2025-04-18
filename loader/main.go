@@ -6,15 +6,15 @@ import (
 	"os"
 
 	"ariga.io/atlas-provider-gorm/gormschema"
-	"management/internal/app/orm"
+	"management/internal/app/models"
 )
 
-var models = []any{
-	&orm.Organization{},
+var ormModels = []any{
+	&models.Organization{},
 }
 
 func main() {
-	stmts, err := gormschema.New("postgres").Load(models...)
+	stmts, err := gormschema.New("postgres").Load(ormModels...)
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to load gorm schema: %v\n", err)

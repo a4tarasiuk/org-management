@@ -2,11 +2,11 @@ package services
 
 import (
 	"gorm.io/gorm"
-	"management/internal/app/orm"
+	"management/internal/app/models"
 )
 
 type Service interface {
-	Create(*orm.Organization) error
+	Create(*models.Organization) error
 }
 
 func NewOrganizationService(db *gorm.DB) Service {
@@ -17,7 +17,7 @@ type service struct {
 	db *gorm.DB
 }
 
-func (s service) Create(org *orm.Organization) error {
+func (s service) Create(org *models.Organization) error {
 	if result := s.db.Create(&org); result.Error != nil {
 		return result.Error
 	}

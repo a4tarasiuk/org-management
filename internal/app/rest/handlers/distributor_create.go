@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"management/internal/app/core"
-	"management/internal/app/orm"
+	"management/internal/app/models"
 	"management/internal/app/services"
 )
 
@@ -21,17 +21,17 @@ func (h CreateDistributorHandler) Handle(ctx *gin.Context) {
 	requestSchema := createOrganizationRequest{}
 
 	if err := ctx.ShouldBindJSON(&requestSchema); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, ErrorResponse{Error: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, errorResponse{Error: err.Error()})
 		return
 	}
 
-	organization := orm.Organization{
+	organization := models.Organization{
 		Name: requestSchema.Name,
 		Type: core.DistributorOrganization,
 	}
 
 	if err := h.service.Create(&organization); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse{Error: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, errorResponse{Error: err.Error()})
 		return
 	}
 
